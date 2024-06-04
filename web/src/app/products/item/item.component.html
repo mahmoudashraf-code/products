@@ -1,0 +1,75 @@
+<div class="flex flex-column h-full overflow-hiiden">
+  <p-menubar [model]="[]">
+    <ng-template pTemplate="start">
+      <div class="flex align-items-center">
+        <p-button icon="pi pi-arrow-left" [rounded]="true" (click)="back()" [text]="true" severity="secondary " />
+        <h2 class="p-0 m-0">{{ id=='add' ? 'Add New Product' : productForm.value.name }}</h2>
+      </div>
+    </ng-template>
+  </p-menubar>
+  <div class="overflow-auto h-full">
+    <div class="flex min-h-full">
+      <div class="col shadow-2 px-4 relative">
+        <h2>Product Form</h2>
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+          <div class="p-field">
+            <label for="code">Code</label>
+            <input id="code" type="text" pInputText formControlName="code" />
+          </div>
+          <div class="p-field">
+            <label for="name">Name</label>
+            <input id="name" type="text" pInputText formControlName="name" />
+          </div>
+          <div class="p-field">
+            <label for="description">Description</label>
+            <input id="description" type="text" pInputText formControlName="description" />
+          </div>
+          <div class="p-field">
+            <label for="price">Price</label>
+            <p-inputNumber id="price" formControlName="price" [min]="0"></p-inputNumber>
+          </div>
+          <div class="p-field">
+            <label for="category">Category</label>
+            <input id="category" type="text" pInputText formControlName="category" />
+          </div>
+          <div class="p-field">
+            <label for="quantity">Quantity</label>
+            <p-inputNumber id="quantity" formControlName="quantity" [min]="0"></p-inputNumber>
+          </div>
+          <div class="p-field">
+            <label for="inventoryStatus">Inventory Status</label>
+            <p-dropdown id="inventoryStatus" formControlName="inventoryStatus" [options]="['INSTOCK','OUTOFSTOCK']"
+              placeholder="Select a status">
+            </p-dropdown>
+          </div>
+          <div class="p-field">
+            <label for="rating">Rating</label>
+            <p-rating id="rating" formControlName="rating" [cancel]="false"></p-rating>
+          </div>
+          <div class="p-field">
+            <button pButton type="submit" label="Submit"></button>
+          </div>
+        </form>
+      </div>
+      <div class="col">
+        <input type="file" accept="image/*" hidden #fileInputBanner (change)="onbannerChange($event)" />
+        <input type="file" accept="image/*" #fileInputimages hidden (change)="onImagesChange($event)" multiple />
+        <div class="shadow-3 m-5 p-5 border-round-lg flex align-items-center justify-content-center"
+          (click)="fileInputBanner.click()">
+          <h3>Select Banner</h3>
+        </div>
+        <div class="shadow-3 m-5 border-round-lg">
+          <img *ngIf="productForm.value.banner" [src]="productForm.value.banner" alt=""
+            class="w-full block border-round-lg">
+        </div>
+        <div class="shadow-3 m-5 p-5 border-round-lg flex align-items-center justify-content-center"
+          (click)="fileInputimages.click()">
+          <h3>Select Images</h3>
+        </div>
+        <div class="shadow-3 m-5 border-round-lg" *ngFor="let item of images">
+          <img [src]="item" alt="" class="w-full block border-round-lg">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
